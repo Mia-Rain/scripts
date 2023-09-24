@@ -1,0 +1,18 @@
+#!/bin/sh
+# tiny script for xrandr transform
+# for when underscan is missing
+##
+# xrandr --output HDMI-1 --panning 1920x1080 --transform HS,DS,HP,0,VS,VP,0,0,1
+#                 OUTPUT           RES
+###
+# TRANSFORM
+# HS: Horizontal Scaling  | 1.00->2.00           | Mess with till desired setting
+# DS: Diagonal Shift      | Positive: Slant Left | Negative: Slant Right
+# HP: Horizontal Position | Positive: LEFT       | Negative: RIGHT
+# 0:
+# VS: Vertical Scaling    | 1.00->2.00           | Mess with till desired setting 
+# VP: Vertical Position   | Positive: UP         | Negative: DOWN
+# 0: UNKNOWN
+# 0: UNKNOWN
+# S:  Scaling             | Positive: Larger     | Negative: Smaller
+##
