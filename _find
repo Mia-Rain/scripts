@@ -1,0 +1,27 @@
+#!/bin/sh
+# shellcheck disable=SC2244
+for file in "${1%/}/"*; do
+  # using dotfiles likely causes issues
+  file="${file#./}"; file="${file%/}"; file="${file#/}"; file="${file#"${1#./}"}"
+  # bunch of fixes for formatting
+  case "${file#/}" in
+    '.'|'..'|'.*'|'*') continue ;;
+    *) :;;
+  esac
+  # case check for .. & . & * & .*
+  if [ -d "${1%/}/${file#/}" ]; then
+    dirname="${1%/}/${file#/}"
+    [ "$2" ] && dirname="${2:+${2}/}${dirname#./}"
+    # all these checks are for freebsd sh
+    # a case check is likely better here tbh
+    printf '%s\n' "${dirname}"
+    [ "${find_orig_path}" ] || find_orig_path="${PWD}"
+    cd "${dirname#"${2}"/}" || exit 1
+    _find "./" "${dirname}"
+    cd "${find_orig_path}" || exit 1
+  else
+    filename="${1%/}/${file#/}" 
+    [ -n "${2}" ] && filename="${2:+${2}/}${filename#./}"
+    printf '%s\n' "${filename}"
+  fi
+done
